@@ -8,12 +8,18 @@ import SearchClass from '../components/student/search/SearchClass.vue'
 import SearchCourse from '../components/student/search/SearchCourse.vue'
 import CourseTable from '../components/student/search/CourseTable.vue'
 import SearchGrade from '../components/student/search/SearchGrade.vue'
+import Login from '@/components/Login.vue'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+    },
     {
       path: '/home',
       name: 'Home',
