@@ -10,6 +10,7 @@ import CourseTable from '../components/student/search/CourseTable.vue'
 import SearchGrade from '../components/student/search/SearchGrade.vue'
 import Login from '@/components/Login.vue'
 import Test from '@/components/Test.vue'
+import LogOut from '@/components/LogOut.vue'
 import { name } from 'file-loader'
 
 Vue.use(Router)
@@ -28,6 +29,14 @@ export default new Router({
       component: Login,
     },
     {
+      path: '/logout',
+      name: 'LogOut',
+      component: LogOut,
+      meta: {
+        requireAuth: false
+      }
+    },
+    {
       path: '/home',
       name: 'Home',
       component: Home,
@@ -42,6 +51,7 @@ export default new Router({
             requireAuth: false
           }
         },
+        
         {
           path: '/studentSearch',
           name: 'SearchIndex',

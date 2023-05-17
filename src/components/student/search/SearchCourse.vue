@@ -1,7 +1,7 @@
 <template>
     <div>
          <!-- 1.查询表单 -->
-         <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+         <el-form style="margin-top: 20px;" :model="ruleForm" :rules="rules" ref="ruleForm">
                 <el-row>
                     <el-col :span='12'>
                         <el-form-item label="课程号" prop="cx_cno">

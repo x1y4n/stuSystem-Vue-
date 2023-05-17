@@ -4,9 +4,7 @@
         <switch></switch>
         <SideMenu></SideMenu>
       </el-header>
-      <el-footer style="padding-top: 50px;">
         <router-view/>
-    </el-footer>
     </el-container>
   </template>
   

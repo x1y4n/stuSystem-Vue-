@@ -11,7 +11,7 @@
         {{ item.navItem }}
       </el-menu-item>
       <a href="/password" style="color: #222;float: right;padding: 20px;">注销登陆</a>
-      <a href="/password" style="color: #222;float: right;padding: 20px;">修改密码</a>
+      <a href="/logout" style="color: #222;float: right;padding: 20px;">修改密码</a>
       <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i>
     </el-menu>
 </template>
