@@ -9,12 +9,19 @@ import SearchCourse from '../components/student/search/SearchCourse.vue'
 import CourseTable from '../components/student/search/CourseTable.vue'
 import SearchGrade from '../components/student/search/SearchGrade.vue'
 import Login from '@/components/Login.vue'
+import Test from '@/components/Test.vue'
+import { name } from 'file-loader'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path:'/test',
+      name: 'test',
+      component: Test
+    },
     {
       path: '/login',
       name: 'Login',

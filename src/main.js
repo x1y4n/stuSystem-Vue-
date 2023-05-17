@@ -7,6 +7,10 @@ import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI, { Message } from 'element-ui'
 import './permission'
+
+import 'bootstrap/dist/css/bootstrap.css' //引用bootstrap的样式
+import 'bootstrap/dist/js/bootstrap.min.js' //引用bootstrap的js
+
 import store from './store'
 
 Vue.use(ElementUI,axios)

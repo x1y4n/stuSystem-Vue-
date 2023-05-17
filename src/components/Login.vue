@@ -34,14 +34,16 @@ export default {
   },
   methods: {
     login () {
-      axios.post(`http://localhost:8081/user`, {
+      axios.post(`http://localhost:8081/api/user`, {
         username: this.username,
         password: this.password
       })
         .then((res) => {
-          if (res.data.code === 5001) {
+          if (res.data.code === 200) {
             this.$message.success(res.data.msg)
             this.$store.commit('SET_TOKEN', this.username)
+            this.$store.commit('SET_USERINFO', res.data.data)
+            // console.log(sessionStorage.getItem("userInfo"))
             // 用localStorage缓存token值
             this.$router.push({path: '/index'})
           } else {

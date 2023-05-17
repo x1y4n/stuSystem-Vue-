@@ -32,20 +32,20 @@
             </el-form>
             <!-- 2.列表展示（可勾选） -->
             <el-table
-            :data="tableData"
+            :data="info"
             style="width: 100%"
             v-loading="loading"
             :default-sort = "{prop: 'date', order: 'descending'}"
             >
                 <el-table-column
-                prop="cno"
+                prop="courseid"
                 label="课程号"
                 sortable
                 width="300">
                 </el-table-column>
 
                 <el-table-column
-                prop="cname"
+                prop="coursename"
                 label="课程名"
                 sortable
                 width="350">
@@ -59,7 +59,7 @@
                 </el-table-column>
 
                 <el-table-column
-                prop="xf"
+                prop="credit"
                 label="学分"
                 sortable
                 width="200">
@@ -98,31 +98,12 @@
                         { required: true, message: '请填写课程名', trigger: 'blur' }
                     ]
                 },
-                tableData: [{
-                cno: '001',
-                cname: '计算机网络',
-                xs: '16学时',
-                xf: '4'
-                }, {
-                cno: '002',
-                cname: '操作系统',
-                xs: '16学时',
-                xf: '6'
-                }, 
-                {
-                cno: '003',
-                cname: '数据库原理',
-                xs: '16学时',
-                xf: '6'
-                }, 
-                {
-                cno: '004',
-                cname: 'java程序设计',
-                xs: '16学时',
-                xf: '2'
-                },],
+                info: [],
                 multipleSelection:[]
             }
+        },
+        mounted: function(){
+	      this.getCourse();//需要触发的函数
         },
         methods: {
             doQuery(){
@@ -137,6 +118,13 @@
                 }
                 });
             },
+            getCourse(){
+                this.$axios.get(`http://localhost:8081/api/stu/course/`+this.$store.state.userInfo.sid).then(res=>{
+                    if (res.data.code === 200) {
+                        this.info = res.data.data
+                        }
+                    })
+            }
             // formatter(row, column) {
             //     console.log(row.address)
             //     return row.address;
