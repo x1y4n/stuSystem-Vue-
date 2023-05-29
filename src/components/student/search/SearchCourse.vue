@@ -119,7 +119,7 @@
                 });
             },
             getCourse(){
-                this.$axios.get(`http://localhost:8081/api/stu/course/`+this.$store.state.userInfo.sid).then(res=>{
+                this.$axios.get(`http://localhost:8081/api/stu/course/`+JSON.parse(localStorage.getItem('userInfo')).sid).then(res=>{
                     if (res.data.code === 200) {
                         this.info = res.data.data
                         }

@@ -19,13 +19,11 @@
       data () {
         return {
           navList: [
-            {name: '/studentSearch/searchSelf', navItem: '查询个人信息'},
-            {name: '/studentSearch/searchClass', navItem: '查询班级信息'},
-            {name: '/studentSearch/searchCourse', navItem: '查询课程信息'},
-            {name: '/studentSearch/courseTable', navItem: '查询课程表'},
-            {name: '/studentSearch/searchGrade', navItem: '查询个人成绩'}
+            {name: '/teacherSearch/searchSelf', navItem: '查询个人信息'},
+            {name: '/teacherSearch/courseTable', navItem: '查询课程表'},
+            {name: '/teacherSearch/searchGrade', navItem: '查询学生成绩'}
           ],
-          activeIndex:'/studentSearch/searchSelf'
+          activeIndex:'/teacherSearch/searchSelf'
         }
       },
       mounted() {

@@ -26,8 +26,8 @@
         },
       methods:{
         getStu(){
-          console.log(this.$store.state.userInfo.sid)
-          this.$axios.get(`http://localhost:8081/api/stu/`+this.$store.state.userInfo.sid).then(res=>{
+          console.log(JSON.parse(localStorage.getItem('userInfo')).sid)
+          this.$axios.get(`http://localhost:8081/api/stu/`+JSON.parse(localStorage.getItem('userInfo')).sid).then(res=>{
             if (res.data.code === 200) {
               this.info = res.data.data
             }

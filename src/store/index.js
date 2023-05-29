@@ -8,7 +8,7 @@ export default new Vuex.Store({
     // 用户的信息可以直接从浏览器中取出来
     token: localStorage.getItem('token'),
     // 反序列化操作
-    userInfo: JSON.parse(sessionStorage.getItem('userInfo'))
+    userInfo: JSON.parse(localStorage.getItem('userInfo'))
   },
   mutations: {
     // 给token赋值
@@ -22,7 +22,8 @@ export default new Vuex.Store({
       state.userInfo = userInfo
       // session会在每次浏览器关闭时清空，在重新登录后再生成
       // 由于sessionStorage不能存储对象，所以要将其存储成字符串的形式
-      sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+      
     },
     // 移除用户信息
     REMOVE_INFO: (state) => {
@@ -30,7 +31,7 @@ export default new Vuex.Store({
       state.token = ''
       state.userInfo = {}
       localStorage.setItem('token', '')
-      sessionStorage.setItem('userInfo', JSON.stringify(''))
+      localStorage.setItem('userInfo', JSON.stringify(''))
     }
 
   },

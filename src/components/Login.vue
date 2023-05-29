@@ -14,10 +14,19 @@
         密码
       </label>
       <input id="login-input-password" v-model="password" class="login__input" type="password" />
-      <label for="login-sign-up" class="login__label--checkbox">
+      
+      <label  class="login__label">
+      登陆方式
+      </label>
+        <el-radio-group v-model="radio" size="small">
+          <el-radio-button label="学生"></el-radio-button>
+          <el-radio-button label="教师"></el-radio-button>
+          <el-radio-button label="管理员"></el-radio-button>
+        </el-radio-group>
+      <!-- <label for="login-sign-up" class="login__label--checkbox">
         <input id="login-sign-up" type="checkbox" class="login__input--checkbox" />
         保持登陆
-      </label>
+      </label> -->
       <button type="button" class="login__submit" @click="login" >登陆</button>
     </form>
     <a href="#" class="login__forgot">Forgot Password?</a>
@@ -29,12 +38,30 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      radio: '学生',
+      url: ' ',
     }
+  },
+  watch:{
+
   },
   methods: {
     login () {
-      axios.post(`http://localhost:8081/api/user`, {
+      // console.log(this.$store.state.userInfo.sid)
+      switch(this.radio){
+        case '学生':
+          this.url = `http://localhost:8081/api/user/student`
+          break
+        case '教师':
+          this.url = `http://localhost:8081/api/user/teacher`
+          break
+        case '管理员':
+          this.url = `http://localhost:8081/api/user/admin`
+          break
+      }
+      console.log(this.url)
+      axios.post(this.url, {
         username: this.username,
         password: this.password
       })

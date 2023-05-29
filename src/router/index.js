@@ -3,6 +3,13 @@ import Router from 'vue-router'
 import AppIndex from '../components/home/AppIndex.vue'
 import Home from '../components/Home.vue'
 import StudentSearch from '../components/student/SearchIndex.vue'
+import TeacherSearch from '../components/teacher/SearchIndex.vue'
+
+import SearchSelf2 from '../components/teacher/search/SearchSelf.vue'
+import CourseTable2 from '../components/teacher/search/CourseTable.vue'
+import SearchGrade2 from '../components/teacher/search/SearchGrade.vue'
+
+
 import SearchSelf from '../components/student/search/SearchSelf.vue'
 import SearchClass from '../components/student/search/SearchClass.vue'
 import SearchCourse from '../components/student/search/SearchCourse.vue'
@@ -82,6 +89,29 @@ export default new Router({
               path: '/studentSearch/searchGrade',
               name: 'SearchGrade',
               component: SearchGrade
+            }
+          ]
+        },
+        {
+          path: '/teacherSearch',
+          name: 'TeacherIndex',
+          component: TeacherSearch,
+          redirect: '/teacherSearch/searchSelf',
+          children:[
+            {
+              path: '/teacherSearch/searchSelf',
+              name: 'SearchSelf2',
+              component: SearchSelf2
+            },
+            {
+              path: '/teacherSearch/courseTable',
+              name: 'CourseTable2',
+              component: CourseTable2
+            },
+            {
+              path: '/teacherSearch/searchGrade',
+              name: 'SearchGrade2',
+              component: SearchGrade2
             }
           ]
         }

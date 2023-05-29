@@ -7,9 +7,10 @@
       text-color="#222"
       active-text-color="red"
       style="min-width: 800px; top: auto;">
-      <el-menu-item  v-for="(item,i) in navList" :key="i" :index="item.name">
+      <el-menu-item  v-for="(item,i) in activeUsers" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
+      
       <a href="/password" style="color: #222;float: right;padding: 20px;">注销登陆</a>
       <a href="/logout" style="color: #222;float: right;padding: 20px;">修改密码</a>
       <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i>
@@ -24,11 +25,19 @@
         isStu: true,
         activeIndex: '/index',
         navList: [
-          {name: '/index', navItem: '首页'},
-          {name: '/studentSearch', navItem: '信息查询'},
-          {name: '/library', navItem: '提交成绩'},
-          {name: '/admin', navItem: '个人中心'}
+          {name: '/index', navItem: '首页', isShow: true},
+          {name: '/studentSearch', navItem: '学生信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).sid!=null},
+          {name: '/teacherSearch', navItem: '教师信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).tid!=null},
+          {name: '/library', navItem: '提交成绩', isShow: true},
+          {name: '/admin', navItem: '个人中心', isShow: true}
         ]
+      }
+    },
+    computed: {//通过计算属性过滤掉列表中不需要显示的项目
+      activeUsers: function () {
+        return this.navList.filter(function (user) {
+          return user.isShow;//返回isShow=true的项，添加到activeUsers数组
+        })
       }
     },
     created(){
@@ -37,7 +46,6 @@
     mounted() {
       this.activeIndex = "/"+this.$route.path.split("/")[1]
       console.log(this.activeIndex)
-
     },
   }
 </script>
