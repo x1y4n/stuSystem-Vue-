@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <i class="bi bi-house"></i>
     <form action="" class="form-login">
       <ul class="login-nav">
         <li class="login-nav__item active">
@@ -72,8 +73,11 @@ export default {
             this.$store.commit('SET_USERINFO', res.data.data)
             // console.log(sessionStorage.getItem("userInfo"))
             // 用localStorage缓存token值
-            this.$router.push({path: '/index'})
-          } else {
+            if(this.radio=='管理员'){
+              this.$router.push({path: '/main'})
+              }else{this.$router.push({path: '/index'})}
+            } 
+            else {
             this.$message.error(res.data.msg)
           }
         })

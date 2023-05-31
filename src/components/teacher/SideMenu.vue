@@ -21,7 +21,7 @@
           navList: [
             {name: '/teacherSearch/searchSelf', navItem: '查询个人信息'},
             {name: '/teacherSearch/courseTable', navItem: '查询课程表'},
-            {name: '/teacherSearch/searchGrade', navItem: '查询学生成绩'}
+            {name: '/teacherSearch/searchCourse', navItem: '查询教学课程'}
           ],
           activeIndex:'/teacherSearch/searchSelf'
         }

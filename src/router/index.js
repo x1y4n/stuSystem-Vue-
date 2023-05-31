@@ -8,6 +8,7 @@ import TeacherSearch from '../components/teacher/SearchIndex.vue'
 import SearchSelf2 from '../components/teacher/search/SearchSelf.vue'
 import CourseTable2 from '../components/teacher/search/CourseTable.vue'
 import SearchGrade2 from '../components/teacher/search/SearchGrade.vue'
+import SearchCourse2 from '../components/teacher/search/SearchCourse.vue'
 
 
 import SearchSelf from '../components/student/search/SearchSelf.vue'
@@ -25,6 +26,11 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path:'/main',
+      name: 'main',
+      component: () => import("../components/admin/sideMenu/Main.vue")
+    },
     {
       path:'/test',
       name: 'test',
@@ -112,6 +118,11 @@ export default new Router({
               path: '/teacherSearch/searchGrade',
               name: 'SearchGrade2',
               component: SearchGrade2
+            },
+            {
+              path: '/teacherSearch/searchCourse',
+              name: 'SearchCourse2',
+              component: SearchCourse2
             }
           ]
         }

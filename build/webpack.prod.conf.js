@@ -28,6 +28,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+
+    new webpack.ProvidePlugin({  
+      $: "jquery",  
+      jQuery: "jquery",  
+      "windows.jQuery": "jquery"  
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -143,3 +149,10 @@ if (config.build.bundleAnalyzerReport) {
 }
 
 module.exports = webpackConfig
+module.exports = {
+  resolve: {
+      alias: {
+          jquery: "jquery/src/jquery",
+      }
+  }
+}

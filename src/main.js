@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import $ from 'jquery'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI, { Message } from 'element-ui'
+import "bootstrap-icons/font/bootstrap-icons.css";
 import './permission'
 
 import 'bootstrap/dist/css/bootstrap.css' //引用bootstrap的样式

@@ -245,9 +245,9 @@
                 })
             },
 
-            //查询全部成绩
+            //查询学生全部信息
             getGrade(){
-                this.$axios.post(`http://localhost:8081/api/teacher/courses/`,{
+                this.$axios.get(`http://localhost:8081/api/admin/student/`,{
                     "tid":JSON.parse(localStorage.getItem("userInfo")).tid,
                     "courseid":this.$route.query.courseid
                 }).then(res=>{

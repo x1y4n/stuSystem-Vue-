@@ -28,7 +28,6 @@
           {name: '/index', navItem: '首页', isShow: true},
           {name: '/studentSearch', navItem: '学生信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).sid!=null},
           {name: '/teacherSearch', navItem: '教师信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).tid!=null},
-          {name: '/library', navItem: '提交成绩', isShow: true},
           {name: '/admin', navItem: '个人中心', isShow: true}
         ]
       }

@@ -1,25 +1,33 @@
 <template>
     <el-descriptions  direction="vertical" :column="4" border>
-        <el-descriptions-item label="学号"  content-class-name="my-content">kooriookami</el-descriptions-item>
-        <el-descriptions-item label="姓名"  content-class-name="my-content">周辉</el-descriptions-item>
-        <el-descriptions-item label="联系电话">18100000000</el-descriptions-item>
-        <el-descriptions-item label="出生日期" :span="2">2002/11/1</el-descriptions-item>
-        <el-descriptions-item label="专业">软件工程</el-descriptions-item>
-
-        <el-descriptions-item label="备注">
-            <el-tag size="small">湖北工程学院</el-tag>
-        </el-descriptions-item>
-        <el-descriptions-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-descriptions-item>
+        <el-descriptions-item label="教师号"  content-class-name="my-content">{{info.tid}}</el-descriptions-item>
+        <el-descriptions-item label="姓名"  content-class-name="my-content">{{info.tname}}</el-descriptions-item>
+        <el-descriptions-item label="性别">{{ info.tgender }}</el-descriptions-item>
+        <el-descriptions-item label="出生日期" :span="2">{{info.tbirthday}}</el-descriptions-item>
+        <el-descriptions-item label="院系">{{info.tdept}}</el-descriptions-item>
+        <el-descriptions-item label="电话">{{info.tphone}}</el-descriptions-item>
     </el-descriptions>
 </template>
-
 <script>
     export default {
       data(){
         return{
-           
+           info: {}
         }
-        },
+      },
+      mounted:function(){
+        this.getInfo()
+      },
+      methods:{
+        getInfo(){
+          this.$axios.get(`http://localhost:8081/api/teacher/`+JSON.parse(localStorage.getItem('userInfo')).tid).then((res)=>{
+            if (res.data.code === 200) {
+              console.log(res)
+              this.info = res.data.data
+            }
+          })
+        }
+      }
     }
 </script>
 

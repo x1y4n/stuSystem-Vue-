@@ -41,28 +41,28 @@
                 prop="courseid"
                 label="课程号"
                 sortable
-                width="300">
+                >
                 </el-table-column>
 
                 <el-table-column
                 prop="coursename"
                 label="课程名"
                 sortable
-                width="350">
+                >
                 </el-table-column>
 
                 <el-table-column
                 prop="xs"
                 label="学时"
                 sortable
-                width="300">
+                >
                 </el-table-column>
 
                 <el-table-column
                 prop="credit"
                 label="学分"
                 sortable
-                width="200">
+                >
                 </el-table-column>
 
 <!-- 
