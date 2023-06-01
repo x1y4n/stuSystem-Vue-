@@ -248,7 +248,22 @@
 <script>
     export default{
         data(){
-         
+            var checkGrade = (rule, value, callback) => {
+                if (!value) {
+                return callback(new Error('成绩不能为空'));
+                }
+                setTimeout(() => {
+                if (!Number.isInteger(value)) {
+                    callback(new Error('请输入数字值'));
+                } else {
+                    if (value < 0 || value>100) {
+                    callback(new Error('成绩必须为0-100'));
+                    } else {
+                    callback();
+                    }
+                }
+                }, 1000);
+            };
             return {
                 pagination: {},
                 dataList: [],//当前页要展示的分页列表数据

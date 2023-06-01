@@ -29,7 +29,14 @@ export default new Router({
     {
       path:'/main',
       name: 'main',
-      component: () => import("../components/admin/sideMenu/Main.vue")
+      component: () => import("../components/admin/sideMenu/Main.vue"),
+      children:[
+        {
+        path:'/stuInfo',
+        name: 'stuInfo',
+        component: () => import("@/components/admin/views/StudentInfo.vue")
+      }
+    ]
     },
     {
       path:'/test',

@@ -61,7 +61,7 @@ export default {
 							parentid:'2',
 							name:'学生信息查询',
 							icon:'',
-							url:'/password'
+							url:'/stuInfo'
 						},
 						{
 							id:'5',
