@@ -80,7 +80,7 @@ export default {
 			parentid:'0',
 			name:'课程管理',
 			icon:'bi bi-journal-album',
-			url:'/course',
+			url:'/courseInfo',
 		  },
 		  {
 			id:'7',

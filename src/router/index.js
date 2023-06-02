@@ -47,6 +47,11 @@ export default new Router({
         component: () => import("@/components/admin/views/ClassInfo.vue")
       },
       {
+        path:'/courseInfo',
+        name: 'courseInfo',
+        component: () => import("@/components/admin/views/CourseInfo.vue")
+      },
+      {
         path:'/userStu',
         name: 'userStu',
         component: () => import("@/components/admin/views/UserStu.vue")
