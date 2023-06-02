@@ -137,7 +137,7 @@
                 });
             },
             getCourse(){
-                this.$axios.get(`http://localhost:8081/api/teacher/courses/`+JSON.parse(localStorage.getItem('userInfo')).tid).then(res=>{
+                this.$axios.get(`/api/teacher/courses/`+JSON.parse(localStorage.getItem('userInfo')).tid).then(res=>{
                     if (res.data.code === 200) {
                         this.info = res.data.data
                         }

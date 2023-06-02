@@ -20,7 +20,7 @@
       },
       methods:{
         getInfo(){
-          this.$axios.get(`http://localhost:8081/api/teacher/`+JSON.parse(localStorage.getItem('userInfo')).tid).then((res)=>{
+          this.$axios.get(`/api/teacher/`+JSON.parse(localStorage.getItem('userInfo')).tid).then((res)=>{
             if (res.data.code === 200) {
               console.log(res)
               this.info = res.data.data

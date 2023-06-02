@@ -47,31 +47,31 @@ export default {
 		  {
 			id:'2',
 			parentid:'0',
+			name:'班级管理',
+			icon:'bi bi-circle-fill',
+			url:'/classInfo',
+		  },
+	
+		{
+			id:'3',
+			parentid:'0',
 			name:'学生管理',
-			icon:'bi bi-person-fill',
+			icon:'bi bi-file-person',
 			children:[
 				{
-					id:'3',
-					parentid:'2',
-					name:'信息管理',
+					id:'4',
+					parentid:'3',
+					name:'学生信息查询',
 					icon:'',
-					children:[
-						{
-							id:'4',
-							parentid:'2',
-							name:'学生信息查询',
-							icon:'',
-							url:'/stuInfo'
-						},
-						{
-							id:'5',
-							parentid:'2',
-							name:'学生成绩查询',
-							icon:'',
-							url:'/password'
-						}
-					]
+					url:'/stuInfo'
 				},
+				{
+					id:'5',
+					parentid:'3',
+					name:'学生成绩查询',
+					icon:'',
+					url:'/stuGrade'
+				}
 			]
 		  },
 		  
@@ -87,31 +87,47 @@ export default {
 			parentid:'0',
 			name:'用户管理',
 			icon:'bi bi-person-circle',
-			url:'/course',
+			children:[
+				{
+					id:'8',
+					parentid:'7',
+					name:'学生用户管理',
+					icon:'',
+					url:'/userStu'
+				},
+				{
+					id:'9',
+					parentid:'7',
+					name:'教师用户管理',
+					icon:'',
+					url:'/userTea'
+				},
+				{
+					id:'10',
+					parentid:'7',
+					name:'管理员用户管理',
+					icon:'',
+					url:'/userAdm'
+				},
+			],
 		  },
+		  
 		  {
-			id:'8',
-			parentid:'0',
-			name:'班级管理',
-			icon:'bi bi-circle-fill',
-			url:'/course',
-		  },
-		  {
-			id:'9',
+			id:'11',
 			parentid:'0',
 			name:'课表管理',
 			icon:'bi bi-journal-album',
 			children:[
 				{
-					id:'10',
-					parentid:'9',
+					id:'12',
+					parentid:'11',
 					name:'课表信息查询',
 					icon:'',
 					url:'/password'
 				},
 				{
-					id:'11',
-					parentid:'9',
+					id:'13',
+					parentid:'11',
 					name:'排课控制',
 					icon:'',
 					url:'/password'
@@ -121,7 +137,6 @@ export default {
 	  ],
     }
   },
- 
 }
 </script>
  

@@ -27,14 +27,39 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path:'/main',
-      name: 'main',
+      path:'/admin',
+      name: 'admin',
       component: () => import("../components/admin/sideMenu/Main.vue"),
       children:[
         {
         path:'/stuInfo',
         name: 'stuInfo',
         component: () => import("@/components/admin/views/StudentInfo.vue")
+      },
+      {
+        path:'/stuGrade',
+        name: 'stuGrade',
+        component: () => import("@/components/admin/views/StudentGrade.vue")
+      },
+      {
+        path:'/classInfo',
+        name: 'classInfo',
+        component: () => import("@/components/admin/views/ClassInfo.vue")
+      },
+      {
+        path:'/userStu',
+        name: 'userStu',
+        component: () => import("@/components/admin/views/UserStu.vue")
+      },
+      {
+        path:'/userTea',
+        name: 'userTea',
+        component: () => import("@/components/admin/views/UserTea.vue")
+      },
+      {
+        path:'/userAdm',
+        name: 'userAdm',
+        component: () => import("@/components/admin/views/UserAdm.vue")
       }
     ]
     },

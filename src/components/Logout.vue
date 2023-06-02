@@ -1,5 +1,0 @@
-<template>
-  <div>
-    <i class="bi bi-house"></i>
-  </div>
-</template>

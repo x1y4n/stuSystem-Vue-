@@ -30,7 +30,6 @@
       </label> -->
       <button type="button" class="login__submit" @click="login" >登陆</button>
     </form>
-    <a href="#" class="login__forgot">Forgot Password?</a>
 </div>
 </template>
 <script>
@@ -52,13 +51,13 @@ export default {
       // console.log(this.$store.state.userInfo.sid)
       switch(this.radio){
         case '学生':
-          this.url = `http://localhost:8081/api/user/student`
+          this.url = `/api/user/student`
           break
         case '教师':
-          this.url = `http://localhost:8081/api/user/teacher`
+          this.url = `/api/user/teacher`
           break
         case '管理员':
-          this.url = `http://localhost:8081/api/user/admin`
+          this.url = `/api/user/admin`
           break
       }
       console.log(this.url)
@@ -74,7 +73,7 @@ export default {
             // console.log(sessionStorage.getItem("userInfo"))
             // 用localStorage缓存token值
             if(this.radio=='管理员'){
-              this.$router.push({path: '/main'})
+              this.$router.push({path: '/admin'})
               }else{this.$router.push({path: '/index'})}
             } 
             else {

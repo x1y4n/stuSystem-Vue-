@@ -9,18 +9,17 @@ import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI, { Message } from 'element-ui'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './permission'
-
 import 'bootstrap/dist/css/bootstrap.css' //引用bootstrap的样式
 import 'bootstrap/dist/js/bootstrap.min.js' //引用bootstrap的js
-
 import store from './store'
-
-Vue.use(ElementUI,axios)
+//设置axios默认url
+axios.defaults.baseURL=`http://localhost:8081/`
 
 Vue.prototype.$message = Message
 Vue.prototype.$store = store
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
+Vue.use(ElementUI,axios)
 
 new Vue({
   el: '#app',

@@ -213,7 +213,7 @@
             //添加成绩
             handleAdd() {
                 // 发送Ajax请求
-                this.$axios.post(`http://localhost:8081/api/teacher/grade/`,{
+                this.$axios.post(`/api/teacher/grade/`,{
                     "sid": this.addFormData.sid,
                     "grade": this.addFormData.grade,
                     "courseid": this.info[0].courseid
@@ -230,7 +230,7 @@
 
             //编辑成绩
             handleEdit(){
-                this.$axios.put("http://localhost:8081/api/teacher/grade/",{
+                this.$axios.put("/api/teacher/grade/",{
                     "grade": this.editFormData.grade,
                     "sid": this.editFormData.sid,
                     "courseid": this.editFormData.courseid
@@ -247,7 +247,7 @@
 
             //查询全部成绩
             getGrade(){
-                this.$axios.post(`http://localhost:8081/api/teacher/courses/`,{
+                this.$axios.post(`/api/teacher/courses/`,{
                     "tid":JSON.parse(localStorage.getItem("userInfo")).tid,
                     "courseid":this.$route.query.courseid
                 }).then(res=>{

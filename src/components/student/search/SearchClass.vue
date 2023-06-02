@@ -22,7 +22,7 @@
         },
       methods:{
         getClass(){
-          this.$axios.get(`http://localhost:8081/api/stu/class/`+JSON.parse(localStorage.getItem('userInfo')).sid).then(res=>{
+          this.$axios.get(`/api/stu/class/`+JSON.parse(localStorage.getItem('userInfo')).sid).then(res=>{
             if (res.data.code === 200) {
               console.log(res.data)
               this.info = res.data.data

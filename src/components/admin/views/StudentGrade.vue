@@ -1,310 +1,204 @@
 <template>
     <div style="margin-left: 10px;">
-        根据学号查询、根据姓名查询某个学生信息，根据专业、班级查询某个专业、班级所有学生信息
-        <el-row :gutter="20">
-            <el-col :span="6">
+        <el-row :gutter="20" style="margin-top: 20px;">
+            <el-col :span="4">
                 <el-input placeholder="按学号查询" clearable v-model="searchList.sid"></el-input>
             </el-col>
-
-            <el-col :span="6">
-                <el-input placeholder="按姓名查询" clearable v-model="searchList.sname"></el-input>
-            </el-col>
-
-            <el-col :span="6">
-                <el-select style="width:100%" v-model="searchList.classid" clearable  placeholder="按班级查询">
+  
+            <el-col :span="4">
+                <el-select style="width:100%" v-model="searchList.courseid" clearable  placeholder="按课程查询">
                     <el-option
-                    v-for="item in classList"
-                    :key="item.classid"
-                    :label="item.classid"
-                    :value="item.classid">
+                    v-for="item in courseid"
+                    :key="item.courseid"
+                    :label="item.courseid"
+                    :value="item.courseid">
                     </el-option>
                 </el-select>
             </el-col>
-            <el-col :span="6">
-                <el-select style="width:100%" v-model="searchList.major" clearable  placeholder="按专业查询">
-                    <el-option
-                    v-for="(item, index) in classList" 
-                    :key="index"
-                    :label="item.major"
-                    :value="item.major">
-                    </el-option>
-                </el-select>
+            <el-col :span="3">
+                <el-input placeholder="最低成绩" clearable v-model="searchList.low"></el-input>
+            </el-col>
+            <el-col :span="3">
+                <el-input placeholder="最高成绩" clearable v-model="searchList.height"></el-input>
             </el-col>
         </el-row>
-
+  
        
         <el-row>
             <el-col>
-                <el-button type="primary" round>查询</el-button>
-                <el-button type="primary" @click="handleCreate()" style="float: right;">新建</el-button>
+                <el-button type="primary" round @click="doQuery()">查询</el-button>
+                <el-button type="primary" @click="handleCreate()" round>添加</el-button>
             </el-col>
         </el-row>      
         <el-table
         :data="info"
         style="width: 100%"
-        height="1080px"
+        height="500px"
         v-loading="loading"
-        :default-sort = "{prop: 'date', order: 'descending'}"
+        :row-class-name="tableRowClassName"
+        :default-sort = "{prop: 'sid'}"
         >
+        
             <el-table-column
+            border
             prop="sid"
             align="center"
             label="学号"
             sortable
             width="160px">
             </el-table-column>
-
+  
             <el-table-column
-            label="姓名"
+            prop="courseid"
             align="center"
-            width="80px">
-            <template slot-scope="scope">
-                <el-popover trigger="hover" placement="top">
-                <p>姓名: {{ scope.row.sname }}</p>
-                <p>住址: {{ scope.row.saddress }}</p>
-                <div slot="reference" class="name-wrapper">
-                    <el-tag size="medium">{{ scope.row.sname }}</el-tag>
-                </div>
-                </el-popover>
-            </template>
-            </el-table-column>
-           
-            <el-table-column
-            prop="sgender"
-            align="center"
-            label="性别"
-            width="80px">
-            </el-table-column>
-
-            <el-table-column
-            label="生日"
-            align="center"
-            width="180px">
-            <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.sbirthday }}</span>
-            </template>
-            </el-table-column>
-            
-
-            <el-table-column
-            prop="major"
-            align="center"
-            label="专业"
-            width="100px">
-            </el-table-column>
-
-            <el-table-column
-            prop="classid"
-            align="center"
-            label="班级号"
-            width="180px">
-            </el-table-column>
-
-            <el-table-column
-            prop="sphone"
-            align="center"
-            label="电话号码"
-            width="180px">
-            </el-table-column>
-
-            <el-table-column
-            prop="sremark"
-            label="备注"
+            label="课程号"
             sortable
-            width="100px">
+            width="160px">
             </el-table-column>
+
+            <el-table-column
+            prop="coursename"
+            align="center"
+            label="课程名"
+            sortable
+            width="160px">
+            </el-table-column>
+
+            <el-table-column
+            prop="grade"
+            align="center"
+            label="成绩"
+            sortable
+            width="160px">
+            </el-table-column>
+
             <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+                    <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <!-- @current-change="handleCurrentChange" -->
-        <el-pagination
-            class="pagiantion"
-            :current-page="pagination.currentPage"
-            :page-size="pagination.pageSize"
-            layout="total, prev, pager, next, jumper"
-            :total="pagination.total">
-        </el-pagination>
-
-
-
+        
+  
         <!-- 新增标签弹层 -->
         <el-dialog title="新增个人信息" :visible.sync="dialogFormVisible">
-            <el-form ref="addFormData" :model="addFormData" :rules="rules" label-position="right" label-width="100px">
-
+            <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
                 <el-row :gutter="10">
                     <el-col :span="10">
-                        <el-form-item label="学号" prop="sid">
-                            <el-input v-model="addFormData.sid" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="姓名" prop="sname">
-                            <el-input v-model="addFormData.sname" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="性别" prop="sgender" lable="性别">
-                            <el-select v-model="addFormData.sgender"  placeholder="请选择">
-                                <el-option
-                                v-for="item in [{value: '男',label: '男'},{value: '女',label: '女'}]"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                
-                <el-row :gutter="10">
-                    <el-col :span="10">
-                        <el-form-item label="班级号" prop="classid" >
-                            <el-select  v-model="addFormData.classid" clearable  placeholder="请选择班级名称">
-                                <el-option
-                                v-for="item in classList"
-                                :key="item.classid"
-                                :label="item.classid"
-                                :value="item.classid">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-form-item label="专业" prop="major">
-                            <el-select style="width:100%" v-model="addFormData.major" clearable >
-                                <el-option
-                                v-for="(item, index) in classList" 
-                                :key="index"
-                                :label="item.major"
-                                :value="item.major">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    
-                </el-row>
-                <el-row :gutter="10">
-                    <el-col :span="10">
-                        <el-form-item  label="出生日期">
-                            <el-date-picker placeholder="选择时间" v-model="addFormData.sbirthday" style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-form-item  label="家庭住址">
-                            <el-input  v-model="addFormData.saddress" ></el-input>
+                        <el-form-item label="学号" prop="sid" >
+                            <el-input v-model="FormData.sid" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="10">
                     <el-col :span="10">
-                        <el-form-item  label="电话号码">
-                            <el-input  v-model="addFormData.sphone" ></el-input>
+                        <el-form-item label="课程号" prop="courseid" >
+                            <el-select  v-model="FormData.courseid" clearable  placeholder="请选择课程id">
+                                <el-option
+                                v-for="item in courseid"
+                                :key="item.courseid"
+                                :label="item.courseid"
+                                :value="item.courseid">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
-                    </el-col>
+                    </el-col>     
+                </el-row>
+                <el-row :gutter="10">
                     <el-col :span="10">
-                        <el-form-item  label="备注">
-                            <el-input  v-model="addFormData.sremark" ></el-input>
+                        <el-form-item  label="成绩" prop="courseid">
+                            <el-input  v-model="FormData.grade" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="submitForm1('addFormData')">确定</el-button>
+                <el-button type="primary" @click="submitForm1('FormData')">确定</el-button>
             </div>
         </el-dialog>
-
+  
         <!-- 编辑标签弹层 -->
-        <el-dialog title="编辑成绩" :visible.sync="dialogFormVisible4Edit">
-            <el-form ref="editFormData" :model="editFormData" :rules="rules" label-position="right"
-                    label-width="100px">
-                        <el-row>
-                            <el-col :span="10">
-                                <el-form-item label="学号">
-                                    <el-input v-model="editFormData.sid" :disabled="true"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="10">
-                                <el-form-item label="课程号">
-                                    <el-input v-model="editFormData.courseid" :disabled="true"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-form-item label="成绩" prop="grade">
-                            <el-input v-model.number="editFormData.grade"></el-input>
+        <el-dialog title="编辑个人信息" :visible.sync="dialogFormVisible4Edit">
+            <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
+                <el-row :gutter="10">
+                    <el-col :span="10">
+                        <el-form-item label="学号" prop="sid" >
+                            <el-input v-model="FormData.sid" disabled ></el-input>
                         </el-form-item>
-                    <el-form-item>
-                        <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
-                        <el-button type="primary" @click="submitForm2('editFormData')">确定</el-button>
-                    </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="10">
+                        <el-form-item label="课程号" prop="courseid" >
+                            <el-input v-model="FormData.courseid" disabled ></el-input>
+                        </el-form-item>
+                    </el-col>     
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="10">
+                        <el-form-item  label="成绩" prop="courseid">
+                            <el-input  v-model="FormData.grade" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
+                <el-button type="primary" @click="submitForm2('FormData')">确定</el-button>
+            </div>
         </el-dialog>
     </div>
-</template>
-<script>
+  </template>
+  <script>
     export default{
         data(){
-            var checkGrade = (rule, value, callback) => {
-                if (!value) {
-                return callback(new Error('成绩不能为空'));
-                }
-                setTimeout(() => {
-                if (!Number.isInteger(value)) {
-                    callback(new Error('请输入数字值'));
-                } else {
-                    if (value < 0 || value>100) {
-                    callback(new Error('成绩必须为0-100'));
-                    } else {
-                    callback();
-                    }
-                }
-                }, 1000);
-            };
             return {
                 pagination: {},
                 dataList: [],//当前页要展示的分页列表数据
-                searchList: {}, //查询条件
-
-                classList: [], //
-                addFormData: {
+                searchList: {
                     sid:'',
-                    sname:'',
-                    sgender:'',
-                    sbirthday:'',
-                    major:'',
-                    classid:'',
-                    saddress:'',
-                    sphone:'',
-                    sremark:'',
-                },//添加表单数据
-                editFormData: {},//编辑表单数据
+                    courseid:'',
+                    low:'',
+                    height:'',
+                }, //查询条件
+                courseid:[],
+                classList: [], //
+                FormData: {
+                    sid:'',
+                    courseid:'',
+                    grade:'',
+                    coursename:'',
+                },//添加/编辑表单数据
+  
                 dialogFormVisible: false,//增加表单是否可见
                 dialogFormVisible4Edit:false,//编辑表单是否可见
                 loading:false,//是否显示加载圈
                 busy:true,//是否可以请求
                 rules: {//校验规则
                 sid: [{required: true, message: '学号不能为空', trigger: 'blur'}],
-                sname: [{required: true, message: '姓名不能为空', trigger: 'blur'}],
-                sgender: [{required: true, message: '性别不能为空', trigger: 'blur'}],
-                major: [{required: true, message: '专业不能为空', trigger: 'blur'}],
-                classid: [{required: true, message: '班级不能为空', trigger: 'blur'}],
-                
+                courseid: [{required: true, message: '课程号不能为空', trigger: 'blur'}],
+                grade: [{required: true, message: '成绩不能为空', trigger: 'blur'}],
                 },
-                info: [{},{}],
+                info: [],
                 multipleSelection:[]
             }
         },
         //钩子函数，VUE对象初始化完成后自动执行
         created() {
-            this.getGrade();//需要触发的函数
-            this.getClassIdAndMajor();
+            this.getAllScores();//需要触发的函数
+            this.getCourseId()
         },
         methods: {
 
+            //表格状态
+            tableRowClassName({row, rowIndex}) {
+                if(row.grade<60)
+                    return 'warning-row';
+                else if(row.grade>86)
+                    return 'success-row'
+            },
             //添加验证
             submitForm1(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -317,7 +211,7 @@
                 }
                 });
             },
-
+  
             //编辑验证
             submitForm2(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -329,7 +223,23 @@
                 }
                 });
             },
+  
+            //根据条件查询学生成绩
             doQuery(){
+                this.$axios.post(`/api/admin/student/scores/query`,{
+                    sid:this.searchList.sid,
+                    courseid:this.searchList.courseid,
+                    low:this.searchList.low,
+                    height:this.searchList.height,
+                }).then(res=>{
+                    if (res.data.code === 200) {
+                        this.$message.success("查询成功")
+                        this.info = res.data.data
+                        console.log(this.info)
+                    }else{
+                        this.$message.error("查询失败")
+                    }
+                })
             },
              //弹出添加窗口
              handleCreate() {
@@ -338,74 +248,110 @@
             },
             //弹出编辑窗口
             handleUpdate(row) {
-                this.editFormData = row
+                this.resetForm();
+                this.FormData = row
                 this.dialogFormVisible4Edit=true//编辑表单是否可见
             },
             //重置表单
             resetForm() {
-                this.formData = {};
+                this.FormData = {};
             },
-
-            //添加成绩
+  
+            //添加学生成绩信息
             handleAdd() {
                 // 发送Ajax请求
-                this.$axios.post(`http://localhost:8081/api/teacher/grade/`,{
-                    "sid": this.addFormData.sid,
-                    "grade": this.addFormData.grade,
-                    "courseid": this.info[0].courseid
+                this.$axios.post(`api/admin/student/scores`,{
+                    "sid": this.FormData.sid,
+                    "courseid": this.FormData.courseid,
+                    "grade": this.FormData.grade,
                 }).then(res=>{
                     if (res.data.code === 200) {
                         this.$message.success("添加成功")
                         this.dialogFormVisible=false
-                        this.getGrade()
+                        this.getAllScores()
                     }else{
                         this.$message.error("添加失败")
                     }
                 })
             },
 
-            //编辑成绩
+            //删除学生成绩信息
+            handleDelete(row) {
+                //1. 弹出提示框
+                this.$confirm("此操作将永久删除当前数据，是否继续？", "提示", {
+                    type: 'info'
+                }).then(() => {
+                    console.log(row.sid,row.courseid)
+                    this.$axios.delete(`/api/admin/student/scores/`,{
+                        data:{
+                            "sid":row.sid,
+                        "courseid":row.courseid
+                        }
+                    }).then((res) => {
+                        if (res.data.code === 200) {
+                            this.$message.success("删除成功")
+                        } else if (res.data.code === 404) {
+                            this.$message.error("删除失败")
+                        } else {
+                            this.$message.error(res.data.msg)
+                        }
+                    }).finally(() => {
+                        this.getAllScores();
+                    })
+                }).catch(()=>{
+                    this.$message.success("取消删除操作")
+                })
+            },
+
+            //编辑学生成绩信息
             handleEdit(){
-                this.$axios.put("http://localhost:8081/api/teacher/grade/",{
-                    "grade": this.editFormData.grade,
-                    "sid": this.editFormData.sid,
-                    "courseid": this.editFormData.courseid
+                this.$axios.put("/api/admin/student/scores",{
+                    "sid": this.FormData.sid,
+                    "courseid": this.FormData.courseid,
+                    "grade": this.FormData.grade,
                 }).then(res=>{
+                    this.resetForm()
                     if (res.data.code === 200) {
                         this.$message.success("更新成功")
                         this.dialogFormVisible4Edit=false
-                        this.getGrade()
+                        this.getAllScores()
                     }else{
                         this.$message.error("更新失败")
                     }
                 })
             },
-
-            //查询学生全部信息
-            getGrade(){
-                this.$axios.get(`http://localhost:8081/api/admin/student/`,).then(res=>{
+  
+            //查询所有成绩
+            getAllScores(){
+                this.$axios.get(`/api/admin/student/scores`,).then(res=>{
                     if (res.data.code === 200) {
                         this.info = res.data.data
-                        console.log(this.info)
                     }else{
-                        this.$message.error("更新失败")
+                        this.$message.error("查询失败")
                     }
                 })
             },
-
-            //查询所有班级id
-            getClassIdAndMajor(){
-                this.$axios.get(`http://localhost:8081/api/admin/classid/`,).then(res=>{
+  
+            //查询所有课程id
+            getCourseId(){
+                this.$axios.get(`/api/admin/student/courseid`,).then(res=>{
                     if (res.data.code === 200) {
-                        this.classList = res.data.data
-                        console.log(this.classList)
+                        this.courseid = res.data.data
                     }else{
-                        this.$message.error("查询")
+                        this.$message.error("查询失败")
                     }
                 })
             }
-
-            //
+  
         }
     }
-</script>
+  </script>
+<style>
+ .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
+</style>
