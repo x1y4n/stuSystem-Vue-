@@ -30,8 +30,9 @@ export default new Vuex.Store({
       // 移除用户信息时将用户所有的信息都置为空
       state.token = ''
       state.userInfo = {}
-      localStorage.setItem('token', '')
-      localStorage.setItem('userInfo', JSON.stringify(''))
+      localStorage.clear();
+      // localStorage.setItem('token', '')
+      // localStorage.setItem('userInfo', JSON.stringify(''))
     }
 
   },

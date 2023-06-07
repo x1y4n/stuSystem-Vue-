@@ -1,11 +1,14 @@
 <template>
   <div class="login-container">
     <i class="bi bi-house"></i>
-    <form action="" class="form-login">
+    <form action="" class="form-login" v-show="!isShow" >
       <ul class="login-nav">
         <li class="login-nav__item active">
-          <a href="#">学生管理系统登陆</a>
+          <a href="#" @click="show()">用户登录</a>
         </li>
+        <li class="login-nav__item">
+				<a href="#" @click="show()">用户注册</a>
+			</li>
       </ul>
       <label for="login-input-user" class="login__label">
         用户名
@@ -30,6 +33,45 @@
       </label> -->
       <button type="button" class="login__submit" @click="login" >登陆</button>
     </form>
+
+    <form action="" class="form-login" v-show="isShow" >
+      <ul class="login-nav">
+        <li class="login-nav__item ">
+          <a href="#" @click="show()">用户登录</a>
+        </li>
+        <li class="login-nav__item active">
+				<a href="#" @click="show()">用户注册</a>
+			</li>
+      </ul>
+
+      <label for="login-input-user" class="login__label">
+        请输入您的id
+      </label>
+      <input id="login-input-user" v-model="registerForm.id" class="login__input" type="text" />
+
+      <label for="login-input-user" class="login__label">
+        请输入您要注册的用户名
+      </label>
+      <input id="login-input-user" v-model="registerForm.username" class="login__input" type="text" />
+
+      <label for="login-input-password" class="login__label">
+        请输入您的密码
+      </label>
+      <input id="login-input-password" v-model="registerForm.password" class="login__input" type="password" />
+      
+      <label  class="login__label">
+      请选择账号类型
+      </label>
+        <el-radio-group v-model="radio" size="small">
+          <el-radio-button label="学生"></el-radio-button>
+          <el-radio-button label="教师"></el-radio-button>
+        </el-radio-group>
+      <!-- <label for="login-sign-up" class="login__label--checkbox">
+        <input id="login-sign-up" type="checkbox" class="login__input--checkbox" />
+        保持登陆
+      </label> -->
+      <button type="button" class="login__submit" @click="register()" >登陆</button>
+    </form>
 </div>
 </template>
 <script>
@@ -41,12 +83,17 @@ export default {
       password: '',
       radio: '学生',
       url: ' ',
+      isShow:false,
+      registerForm:{username:'',password:'',}
     }
   },
   watch:{
 
   },
   methods: {
+    show() {
+      this.isShow = !this.isShow
+    },
     login () {
       // console.log(this.$store.state.userInfo.sid)
       switch(this.radio){
@@ -82,7 +129,34 @@ export default {
         })
         .catch(failResponse => {
         })
+    },
+    register(){
+      switch(this.radio){
+        case '学生':
+          this.url = `/api/user/suser`
+          this.$axios.post(this.url,{
+          "sid":this.registerForm.id,
+          "username":this.registerForm.username,
+          "password":this.registerForm.password
+          }).then(res=>{
+            alert(res.data.msg)
+            this.$router.go(0)
+          })
+          break
+        case '教师':
+          this.url = `/api/user/tuser`
+          this.$axios.post(this.url,{
+            "tid":this.registerForm.id,
+            "username":this.registerForm.username,
+            "password":this.registerForm.password
+          }).then(res=>{
+            alert(res.data.msg)
+            this.$router.go(0)
+          })
+          break
+      }
     }
+
   }
 }
 </script>

@@ -13,7 +13,6 @@
     data(){
       return {
         isShow:JSON.parse(localStorage.getItem('userInfo')).id==null,
-        
       }
     }
   }

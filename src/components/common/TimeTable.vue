@@ -11,44 +11,44 @@
           </el-table-column>
           <el-table-column prop="mon" label="星期一" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.mon.title }}</h4>
-              <div v-html="scope.row.mon.content"></div>
+              <h4>{{ scope.row.mon.coursename }}</h4>
+              <div v-html="scope.row.mon.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="tue" label="星期二" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.tue.title }}</h4>
-              <div v-html="scope.row.tue.content"></div>
+              <h4>{{ scope.row.tue.coursename }}</h4>
+              <div v-html="scope.row.tue.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="wed" label="星期三" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.wed.title }}</h4>
-              <div v-html="scope.row.wed.content"></div>
+              <h4>{{ scope.row.wed.coursename }}</h4>
+              <div v-html="scope.row.wed.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="thu" label="星期四" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.thu.title }}</h4>
-              <div v-html="scope.row.thu.content"></div>
+              <h4>{{ scope.row.thu.coursename }}</h4>
+              <div v-html="scope.row.thu.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="fri" label="星期五" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.fri.title }}</h4>
-              <div v-html="scope.row.fri.content"></div>
+              <h4>{{ scope.row.fri.coursename }}</h4>
+              <div v-html="scope.row.fri.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="sat" label="星期六" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.sat.title }}</h4>
-              <div v-html="scope.row.sat.content"></div>
+              <h4>{{ scope.row.sat.coursename }}</h4>
+              <div v-html="scope.row.sat.address"></div>
             </template>
           </el-table-column>
           <el-table-column prop="sun" label="星期日" align="center">
             <template slot-scope="scope">
-              <h4>{{ scope.row.sun.title }}</h4>
-              <div v-html="scope.row.sun.content"></div>
+              <h4>{{ scope.row.sun.coursename }}</h4>
+              <div v-html="scope.row.sun.address"></div>
             </template>
           </el-table-column>
         </el-table>
@@ -111,7 +111,7 @@
                 return 'background-color:#B3DEE5;color: blue;'
             }
         }
-        if (row.row[row.column.property].title !== undefined) {
+        if (row.row[row.column.property].coursename !== undefined) {
           return 'background-color:rgb(15 130 255 / 80%);color: #fff; border-radius:25% 10%;'
         }
       },
@@ -146,7 +146,7 @@
         if (this.events.length > 0) {
           for (let i = 0; i < this.events.length; i++) {
             // 获取星期几
-            let week = this.weeks[this.events[i].xq - 1]
+            let week = this.weeks[this.events[i].week - 1]
             this.timetable[this.events[i].start - 1][week] = this.events[i]
           }
         }
@@ -195,7 +195,7 @@
         }
         if (columnIndex === 2) {
           // 按照课程节数分配占的行数
-          if (row.mon.title !== undefined) {
+          if (row.mon.coursename !== undefined) {
             // 如果有课则分配行数
             return {
               rowspan: row.mon.end - row.mon.start + 1,
@@ -210,7 +210,7 @@
           }
         }
         if (columnIndex === 3) {
-          if (row.tue.title !== undefined) {
+          if (row.tue.coursename !== undefined) {
             return {
               rowspan: row.tue.end - row.tue.start + 1,
               colspan: 1
@@ -223,7 +223,7 @@
           }
         }
         if (columnIndex === 4) {
-          if (row.wed.title !== undefined) {
+          if (row.wed.coursename !== undefined) {
             return {
               rowspan: row.wed.end - row.wed.start + 1,
               colspan: 1
@@ -236,7 +236,7 @@
           }
         }
         if (columnIndex === 5) {
-          if (row.thu.title !== undefined) {
+          if (row.thu.coursename !== undefined) {
             return {
               rowspan: row.thu.end - row.thu.start + 1,
               colspan: 1
@@ -249,7 +249,7 @@
           }
         }
         if (columnIndex === 6) {
-          if (row.fri.title !== undefined) {
+          if (row.fri.coursename !== undefined) {
             return {
               rowspan: row.fri.end - row.fri.start + 1,
               colspan: 1
@@ -262,7 +262,7 @@
           }
         }
         if (columnIndex === 7) {
-          if (row.sat.title !== undefined) {
+          if (row.sat.coursename !== undefined) {
             return {
               rowspan: row.sat.end - row.sat.start + 1,
               colspan: 1
@@ -275,7 +275,7 @@
           }
         }
         if (columnIndex === 8) {
-          if (row.sun.title !== undefined) {
+          if (row.sun.coursename !== undefined) {
             return {
               rowspan: row.sun.end - row.sun.start + 1,
               colspan: 1

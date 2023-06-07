@@ -123,14 +123,14 @@ export default {
 					parentid:'11',
 					name:'课表信息查询',
 					icon:'',
-					url:'/password'
+					url:'/courseTable'
 				},
 				{
 					id:'13',
 					parentid:'11',
 					name:'排课控制',
 					icon:'',
-					url:'/password'
+					url:'/makeCourseTable'
 				}
 			]
 		  },

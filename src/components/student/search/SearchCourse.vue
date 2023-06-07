@@ -65,12 +65,7 @@
                 >
                 </el-table-column>
 
-<!-- 
-                <el-table-column
-                prop="address"
-                label="地址"
-                :formatter="formatter">
-                </el-table-column> -->
+
         </el-table>
     </div>
 </template>
@@ -125,10 +120,7 @@
                         }
                     })
             }
-            // formatter(row, column) {
-            //     console.log(row.address)
-            //     return row.address;
-            // }
+           
         }
     }
 </script>

@@ -4,7 +4,7 @@
         <el-descriptions-item label="班级名称" content-class-name="my-content">{{info.classid}}</el-descriptions-item>
         <el-descriptions-item label="专业" content-class-name="my-content">{{info.major}}</el-descriptions-item>
         <el-descriptions-item label="班级人数">{{info.num}}</el-descriptions-item>
-        <el-descriptions-item label="入学年份" >{{info.classTime}}</el-descriptions-item>
+        <el-descriptions-item label="入学年份" >{{info.classtime}}</el-descriptions-item>
         <el-descriptions-item label="辅导员">{{info.fdy}}</el-descriptions-item>
     </el-descriptions>
     </div>

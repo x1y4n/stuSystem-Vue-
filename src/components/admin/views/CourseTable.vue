@@ -8,15 +8,29 @@
             <el-col :span="4">
                 <el-input placeholder="按课程号查询" clearable v-model="searchList.courseid"></el-input>
             </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 20px;">
+            <el-col :span="4">
+                <el-input placeholder="按教师号查询" clearable v-model="searchList.tid"></el-input>
+            </el-col>
 
-            
+            <el-col :span="4">
+                <el-select v-model="searchList.week" clearable  placeholder="按时间查询">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-col>
         </el-row>
   
        
         <el-row>
             <el-col>
                 <el-button type="primary" round @click="doQuery()">查询</el-button>
-                <el-button type="primary" @click="handleCreate()" round>添加</el-button>
+                <el-button type="primary" round @click="addCourseTable()">添加课表信息</el-button>
             </el-col>
         </el-row>      
         <el-table
@@ -24,11 +38,34 @@
         style="width: 100%"
         height="500px"
         v-loading="loading"
-        :row-class-name="tableRowClassName"
-        :default-sort = "{prop: 'courseid'}"
+        :default-sort = "{prop: 'week'}"
         >
         
-  
+        <el-table-column
+            align="center"
+            label="上课时间"
+            sortable
+            width="160px">
+
+                <el-table-column
+                prop="week"
+                align="center"
+                label="星期数"
+                sortable
+                width="160px">
+                </el-table-column>
+
+                <el-table-column
+                align="center"
+                label="节数"
+                width="160px">
+                    <template slot-scope="scope">
+                        {{ scope.row.start }}-{{ scope.row.end }}节
+                    </template>
+                </el-table-column>
+            
+            </el-table-column>
+            
             <el-table-column
             prop="courseid"
             align="center"
@@ -46,25 +83,33 @@
             </el-table-column>
 
             <el-table-column
+            prop="classid"
+            align="center"
+            label="班级"
+            sortable
+            width="160px">
+            </el-table-column>
+            
+            <el-table-column
             prop="tid"
             align="center"
             label="教师号"
             sortable
             width="160px">
             </el-table-column>
-            
+
             <el-table-column
-            prop="credit"
+            prop="tname"
             align="center"
-            label="学分"
+            label="教师名"
             sortable
             width="160px">
             </el-table-column>
 
             <el-table-column
-            prop="xs"
+            prop="address"
             align="center"
-            label="学时"
+            label="上课地址"
             sortable
             width="160px">
             </el-table-column>
@@ -77,9 +122,8 @@
             </el-table-column>
         </el-table>
         
-  
-        <!-- 新增标签弹层 -->
-        <el-dialog title="新增课程信息" :visible.sync="dialogFormVisible">
+        <!-- 编辑标签弹层 -->
+        <el-dialog title="编辑课程表" :visible.sync="dialogFormVisible4Edit">
             <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
                 <el-row :gutter="10">
                     <el-col :span="10">
@@ -94,72 +138,24 @@
                     </el-col>     
                 </el-row>
                 <el-row :gutter="10">
-                    <el-col :span="10">
-                        <el-form-item  label="教师号" prop="tid">
-                            <el-select  v-model="FormData.tid" clearable  placeholder="请选择教师号">
-                                <el-option
-                                v-for="item in teacherid"
-                                :key="item.tid"
-                                :label="item.tid"
-                                :value="item.tid">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
                     <el-col :span="6">
-                        <el-form-item label="学分" prop="credit" >
-                            <el-input v-model="FormData.credit" ></el-input>
+                        <el-form-item label="上课地址" prop="address" >
+                            <el-input v-model="FormData.address" ></el-input>
+                        </el-form-item>
+                    </el-col> 
+                    <el-col :span="6">
+                        <el-form-item label="星期数" prop="week" >
+                            <el-input v-model="FormData.week" ></el-input>
                         </el-form-item>
                     </el-col>  
                     <el-col :span="6">
-                        <el-form-item label="学时" prop="xs" >
-                            <el-input v-model="FormData.xs" ></el-input>
+                        <el-form-item label="开始节数" prop="starts" >
+                            <el-input v-model="FormData.start" ></el-input>
                         </el-form-item>
                     </el-col>    
-                </el-row>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="submitForm1('FormData')">确定</el-button>
-            </div>
-        </el-dialog>
-  
-        <!-- 编辑标签弹层 -->
-        <el-dialog title="编辑个人信息" :visible.sync="dialogFormVisible4Edit">
-            <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
-                <el-row :gutter="10">
-                    <el-col :span="10">
-                        <el-form-item label="课程名" prop="coursename" >
-                            <el-input v-model="FormData.coursename" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-form-item label="课程号" prop="courseid" >
-                            <el-input v-model="FormData.courseid" ></el-input>
-                        </el-form-item>
-                    </el-col>     
-                </el-row>
-                <el-row :gutter="10">
-                    <el-col :span="10">
-                        <el-form-item  label="教师号" prop="tid">
-                            <el-select  v-model="FormData.tid" clearable  placeholder="请选择教师号">
-                                <el-option
-                                v-for="item in teacherid"
-                                :key="item.tid"
-                                :label="item.tid"
-                                :value="item.tid">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
                     <el-col :span="6">
-                        <el-form-item label="学分" prop="credit" >
-                            <el-input v-model="FormData.credit" ></el-input>
-                        </el-form-item>
-                    </el-col>  
-                    <el-col :span="6">
-                        <el-form-item label="学时" prop="xs" >
-                            <el-input v-model="FormData.xs" ></el-input>
+                        <el-form-item label="结束节数" prop="end" >
+                            <el-input v-model="FormData.end" ></el-input>
                         </el-form-item>
                     </el-col>    
                 </el-row>
@@ -175,22 +171,45 @@
     export default{
         data(){
             return {
-                pagination: {},
-                dataList: [],//当前页要展示的分页列表数据
+                options: [{
+                    value: '1',
+                    label: '星期一'
+                    }, {
+                    value: '2',
+                    label: '星期二'
+                    }, {
+                    value: '3',
+                    label: '星期三'
+                    }, {
+                    value: '4',
+                    label: '星期四'
+                    }, {
+                    value: '5',
+                    label: '星期五'
+                    }, {
+                    value: '6',
+                    label: '星期六'
+                    }, {
+                    value: '7',
+                    label: '星期天'
+                    }
+                ],
                 searchList: {
                     courseid:'',
                     coursename:'',
+                    tid:'',
+                    week:'',
                 }, //查询条件
                 teacherid: [], 
                 FormData: {
                     courseid:'',
                     coursename:'',
-                    tid:'',
-                    credit: '',
-                    xs:'',
+                    address:'',
+                    start: '',
+                    end:'',
+                    week:'',
                 },//添加/编辑表单数据
   
-                dialogFormVisible: false,//增加表单是否可见
                 dialogFormVisible4Edit:false,//编辑表单是否可见
                 loading:false,//是否显示加载圈
                 busy:true,//是否可以请求
@@ -205,30 +224,14 @@
         //钩子函数，VUE对象初始化完成后自动执行
         created() {
             this.getAllScores();//需要触发的函数
-            this.getTeacherId()
+            this.getAllScores()
         },
         methods: {
+            // 跳转添加排课页面
+            addCourseTable(){
+                this.$router.push("makeCourseTable")
+            },
 
-            //表格状态
-            tableRowClassName({row, rowIndex}) {
-                if(row.grade<60)
-                    return 'warning-row';
-                else if(row.grade>86)
-                    return 'success-row'
-            },
-            //添加验证
-            submitForm1(formName) {
-                this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    console.log('succeed submit!!');
-                    this.handleAdd()
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-                });
-            },
-  
             //编辑验证
             submitForm2(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -241,26 +244,24 @@
                 });
             },
   
-            //根据条件查询学生成绩
+            //根据条件查询课程表
             doQuery(){
-                this.$axios.post(`/api/admin/course/query`,{
+                console.log(this.searchList.week)
+                this.$axios.post(`/api/classtable/query`,{
                     "coursename": this.searchList.coursename,
                     "courseid": this.searchList.courseid,
+                    "tid": this.searchList.tid,
+                    "week": this.searchList.week
                 }).then(res=>{
                     if (res.data.code === 200) {
                         this.$message.success("查询成功")
                         this.info = res.data.data
-                        console.log(this.info)
                     }else{
                         this.$message.error("查询失败")
                     }
                 })
             },
-             //弹出添加窗口
-             handleCreate() {
-                this.dialogFormVisible = true;
-                this.resetForm();
-            },
+            
             //弹出编辑窗口
             handleUpdate(row) {
                 this.resetForm();
@@ -272,27 +273,8 @@
                 this.FormData = {};
             },
   
-            //添加学生成绩信息
-            handleAdd() {
-                // 发送Ajax请求
-                this.$axios.post(`api/admin/course`,{
-                    "coursename": this.FormData.coursename,
-                    "courseid": this.FormData.courseid,
-                    "tid": this.FormData.tid,
-                    "credit": this.FormData.credit,
-                    "xs": this.FormData.xs,
-                }).then(res=>{
-                    if (res.data.code === 200) {
-                        this.$message.success("添加成功")
-                        this.dialogFormVisible=false
-                        this.getAllScores()
-                    }else{
-                        this.$message.error("添加失败")
-                    }
-                })
-            },
 
-            //删除学生成绩信息
+            //删除课程表信息
             handleDelete(row) {
                 //1. 弹出提示框
                 this.$confirm("此操作将永久删除当前数据，是否继续？", "提示", {
@@ -320,14 +302,15 @@
                 })
             },
 
-            //编辑学生成绩信息
+            //编辑课程表信息
             handleEdit(){
-                this.$axios.put("/api/admin/course",{
+                this.$axios.put("/api/classtable",{
                     "coursename": this.FormData.coursename,
                     "courseid": this.FormData.courseid,
-                    "tid": this.FormData.tid,
-                    "credit": this.FormData.credit,
-                    "xs": this.FormData.xs,
+                    "address": this.FormData.address,
+                    "start": this.FormData.start,
+                    "end": this.FormData.end,
+                    "week": this.FormData.week,
                 }).then(res=>{
                     this.resetForm()
                     if (res.data.code === 200) {
@@ -340,9 +323,9 @@
                 })
             },
   
-            //查询所有课程
+            //查询所有课程表信息
             getAllScores(){
-                this.$axios.get(`/api/admin/course`,).then(res=>{
+                this.$axios.get(`/api/classtable`,).then(res=>{
                     if (res.data.code === 200) {
                         this.info = res.data.data
                     }else{
@@ -351,27 +334,6 @@
                 })
             },
   
-            //查询所有老师id
-            getTeacherId(){
-                this.$axios.get(`/api/admin/teacherid`,).then(res=>{
-                    if (res.data.code === 200) {
-                        this.teacherid = res.data.data
-                        console.log(this.teacherid)
-                    }else{
-                        this.$message.error("查询失败")
-                    }
-                })
-            }
-  
         }
     }
   </script>
-<style>
- .el-table .warning-row {
-    background: oldlace;
-  }
-
-  .el-table .success-row {
-    background: #f0f9eb;
-  }
-</style>

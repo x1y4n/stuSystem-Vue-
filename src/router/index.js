@@ -17,8 +17,7 @@ import SearchCourse from '../components/student/search/SearchCourse.vue'
 import CourseTable from '../components/student/search/CourseTable.vue'
 import SearchGrade from '../components/student/search/SearchGrade.vue'
 import Login from '@/components/Login.vue'
-import Test from '@/components/Test.vue'
-import LogOut from '@/components/LogOut.vue'
+import Password from '@/components/PassWord.vue'
 import { name } from 'file-loader'
 
 Vue.use(Router)
@@ -52,6 +51,16 @@ export default new Router({
         component: () => import("@/components/admin/views/CourseInfo.vue")
       },
       {
+        path:'/courseTable',
+        name: 'courseTable',
+        component: () => import("@/components/admin/views/CourseTable.vue")
+      },
+      {
+        path:'/makeCourseTable',
+        name: 'makeCourseTable',
+        component: () => import("@/components/admin/views/MakeCourseTable.vue")
+      },
+      {
         path:'/userStu',
         name: 'userStu',
         component: () => import("@/components/admin/views/UserStu.vue")
@@ -69,22 +78,9 @@ export default new Router({
     ]
     },
     {
-      path:'/test',
-      name: 'test',
-      component: Test
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login,
-    },
-    {
-      path: '/logout',
-      name: 'LogOut',
-      component: LogOut,
-      meta: {
-        requireAuth: false
-      }
     },
     {
       path: '/home',
@@ -92,16 +88,21 @@ export default new Router({
       component: Home,
       // home页面并不需要被访问
       redirect: '/index',
+      
       children: [
         {
           path: '/index',
           name: 'AppIndex',
           component: AppIndex,
           meta: {
-            requireAuth: false
-          }
+            requireAuth: true
+          },
         },
-        
+        {
+          path:'/password',
+          name: 'password',
+          component: Password
+        },
         {
           path: '/studentSearch',
           name: 'SearchIndex',
@@ -111,27 +112,42 @@ export default new Router({
             {
               path: '/studentSearch/searchSelf',
               name: 'SearchSelf',
-              component: SearchSelf
+              component: SearchSelf,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/studentSearch/searchClass',
               name: 'SearchClass',
-              component: SearchClass
+              component: SearchClass,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/studentSearch/searchCourse',
               name: 'SearchCourse',
-              component: SearchCourse
+              component: SearchCourse,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/studentSearch/courseTable',
               name: 'CourseTable',
-              component: CourseTable
+              component: CourseTable,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/studentSearch/searchGrade',
               name: 'SearchGrade',
-              component: SearchGrade
+              component: SearchGrade,
+              meta: {
+                requireAuth: true
+              },
             }
           ]
         },
@@ -144,22 +160,34 @@ export default new Router({
             {
               path: '/teacherSearch/searchSelf',
               name: 'SearchSelf2',
-              component: SearchSelf2
+              component: SearchSelf2,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/teacherSearch/courseTable',
               name: 'CourseTable2',
-              component: CourseTable2
+              component: CourseTable2,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/teacherSearch/searchGrade',
               name: 'SearchGrade2',
-              component: SearchGrade2
+              component: SearchGrade2,
+              meta: {
+                requireAuth: true
+              },
             },
             {
               path: '/teacherSearch/searchCourse',
               name: 'SearchCourse2',
-              component: SearchCourse2
+              component: SearchCourse2,
+              meta: {
+                requireAuth: true
+              },
             }
           ]
         }

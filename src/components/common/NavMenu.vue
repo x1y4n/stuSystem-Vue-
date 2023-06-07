@@ -11,8 +11,8 @@
         {{ item.navItem }}
       </el-menu-item>
       
-      <a href="/password" style="color: #222;float: right;padding: 20px;">注销登陆</a>
-      <a href="/logout" style="color: #222;float: right;padding: 20px;">修改密码</a>
+      <a href="/login" @click="logout()" style="color: #222;float: right;padding: 20px;">注销登陆</a>
+      <a href="/password"  style="color: #222;float: right;padding: 20px;">修改密码</a>
       <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i>
     </el-menu>
 </template>
@@ -28,7 +28,6 @@
           {name: '/index', navItem: '首页', isShow: true},
           {name: '/studentSearch', navItem: '学生信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).sid!=null},
           {name: '/teacherSearch', navItem: '教师信息查询', isShow: JSON.parse(localStorage.getItem('userInfo')).tid!=null},
-          {name: '/admin', navItem: '个人中心', isShow: true}
         ]
       }
     },
@@ -46,6 +45,12 @@
       this.activeIndex = "/"+this.$route.path.split("/")[1]
       console.log(this.activeIndex)
     },
+    methods:{
+      logout(){
+        console.log("************")
+        this.$store.commit("REMOVE_INFO")
+      }
+    }
   }
 </script>
 
