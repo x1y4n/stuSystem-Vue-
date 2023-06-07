@@ -4,7 +4,7 @@
 	  <!-- 页面头部区域 高度默认60px -->
 	  <el-header class="el-header">
 		 <!-- 应用名称 -->
-	      <span>学生成绩管理系统</span>
+	      <span>学生信息管理系统</span>
 			
 	  </el-header>
 	  <el-container>

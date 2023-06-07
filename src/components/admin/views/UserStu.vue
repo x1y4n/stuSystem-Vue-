@@ -43,7 +43,7 @@
         </el-table>
 
         <!-- 新增标签弹层 -->
-        <el-dialog title="新增用户用户" :visible.sync="dialogFormVisible">
+        <el-dialog title="新增学生用户" :visible.sync="dialogFormVisible">
             <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
                 <el-row :gutter="10">
                     <el-col :span="10">
@@ -70,7 +70,7 @@
         </el-dialog>
 
         <!-- 编辑标签弹层 -->
-        <el-dialog title="编辑用户信息" :visible.sync="dialogFormVisible4Edit">
+        <el-dialog title="编辑学生用户信息" :visible.sync="dialogFormVisible4Edit">
             <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
                 <el-row :gutter="10">
                     <el-col :span="10">
@@ -165,7 +165,7 @@
             },
             //重置表单
             resetForm() {
-                this.formData = {};
+                this.FormData = {};
             },
 
             //添加用户

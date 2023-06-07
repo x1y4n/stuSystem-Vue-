@@ -125,7 +125,7 @@
         </el-dialog>
   
         <!-- 编辑标签弹层 -->
-        <el-dialog title="编辑个人信息" :visible.sync="dialogFormVisible4Edit">
+        <el-dialog title="编辑课程信息" :visible.sync="dialogFormVisible4Edit">
             <el-form ref="FormData" :model="FormData" :rules="rules" label-position="right" label-width="100px">
                 <el-row :gutter="10">
                     <el-col :span="10">

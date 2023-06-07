@@ -1,35 +1,6 @@
 <template>
     <div>
-         <!-- 1.查询表单 -->
-         <el-form style="margin-top: 20px;" :model="ruleForm" :rules="rules" ref="ruleForm">
-                <el-row>
-                    <el-col :span='12'>
-                        <el-form-item label="课程号" prop="cx_cno">
-                            <el-input 
-                            placeholder="请输入课程号"
-                            v-model="ruleForm.cx_cno"
-                            style="width:200px"
-                            >
-                            <!-- clearable 输入框可清除属性 -->
-                            </el-input>
-                        </el-form-item>
-                    </el-col>  
-                    <el-col :span='12'>
-                        <el-form-item label="课程名" prop="cx_cname">
-                            <el-input 
-                            placeholder="请输入课程名称"
-                            v-model="ruleForm.cx_cname"
-                            style="width:200px"
-                            >
-                            <!-- clearable 输入框可清除属性 -->
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :span="8">
-                    <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-                </el-row>
-            </el-form>
+        
             <!-- 2.列表展示（可勾选） -->
             <el-table
             :data="info"
@@ -69,7 +40,6 @@
                 >
                 <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" size="small">编辑</el-button>
                 </template>
 
                 </el-table-column>

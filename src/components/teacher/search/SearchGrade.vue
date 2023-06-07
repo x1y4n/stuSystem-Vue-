@@ -1,8 +1,6 @@
 <template>
     <div>
         <div class="filter-container">
-                        <el-input placeholder="图书名称" style="width: 200px;" class="filter-item"></el-input>
-                        <el-button class="dalfBut">查询</el-button>
                         <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
         </div>
         <el-table

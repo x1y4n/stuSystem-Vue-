@@ -165,7 +165,7 @@
             },
             //重置表单
             resetForm() {
-                this.formData = {};
+                this.FormData = {};
             },
 
             //添加用户
